@@ -5,6 +5,8 @@
  * and use it straight away.
  */
 
+import mailer from "integrations/mailer"
+
 type ResetPasswordMailer = {
   to: string
   token: string
@@ -16,12 +18,11 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
   const resetUrl = `${origin}/auth/reset-password?token=${token}`
 
   const msg = {
-    from: "TODO@example.com",
+    from: "onboarding@resend.dev",
     to,
     subject: "Your Password Reset Instructions",
     html: `
       <h1>Reset Your Password</h1>
-      <h3>NOTE: You must set up a production email integration in mailers/forgotPasswordMailer.ts</h3>
 
       <a href="${resetUrl}">
         Click here to set a new password
@@ -31,15 +32,17 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
 
   return {
     async send() {
-      if (process.env.NODE_ENV === "production") {
-        // TODO - send the production email, like this:
-        // await postmark.sendEmail(msg)
-        throw new Error("No production email implementation in mailers/forgotPasswordMailer")
-      } else {
-        // Preview email in the browser
-        const previewEmail = (await import("preview-email")).default
-        await previewEmail(msg)
-      }
+      mailer.sendEmail(to, msg.subject, msg.html)
+      // if (process.env.NODE_ENV === "production") {
+      //   // TODO - send the production email, like this:
+      //   // await postmark.sendEmail(msg)
+      //   mailer.sendEmail(to, msg.subject, msg.html)
+      //   throw new Error("No production email implementation in mailers/forgotPasswordMailer")
+      // } else {
+      //   // Preview email in the browser
+      //   const previewEmail = (await import("preview-email")).default
+      //   await previewEmail(msg)
+      // }
     },
   }
 }
