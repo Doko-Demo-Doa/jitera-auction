@@ -1,4 +1,5 @@
 import Document, { Html, Main, NextScript, Head } from "next/document"
+import { ColorSchemeScript } from "@mantine/core"
 
 class MyDocument extends Document {
   // Only uncomment if you need to customize this behaviour
@@ -9,7 +10,9 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <ColorSchemeScript />
+        </Head>
         <body>
           <Main />
           <NextScript />
