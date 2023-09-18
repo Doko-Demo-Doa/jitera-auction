@@ -63,8 +63,14 @@ model Auction {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   expiresAt     DateTime?
-  pricingStep   Int
+  startsAt      DateTime
+  endsAt        DateTime
+  priceStep     Int
   startingPrice Int
+  isEnded       Int
+  name          String
+  currency      String
+  description   String
   UserAuction   UserAuction[]
 }
 

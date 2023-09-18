@@ -1,12 +1,13 @@
 import { z } from "zod"
 
-export const auctionItem = z.object({
+export const AuctionItemSchema = z.object({
+  id: z.number(),
   name: z.string().min(2),
   description: z.string().max(1024),
   startingPrice: z.number().min(1).nonnegative(),
   priceStep: z.number().min(1).nonnegative(),
   currency: z.string(),
-  isEnded: z.boolean(),
-  startTime: z.date().readonly(),
-  endTime: z.date(),
+  isEnded: z.number(),
+  startsAt: z.date().readonly(),
+  endsAt: z.date(),
 })
