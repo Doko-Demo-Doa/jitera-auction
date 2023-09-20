@@ -9,7 +9,7 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode }> = ({
   return (
     <>
       <Head>
-        <title>{title || "jitera-auction"}</title>
+        <title>{title || "Jitera Auction"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
