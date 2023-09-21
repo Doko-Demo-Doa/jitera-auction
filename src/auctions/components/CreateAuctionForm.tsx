@@ -10,7 +10,7 @@ import { AuctionItemSchema, AuctionItemSchemaType } from "src/auctions/schemas"
 import createAuction from "src/auctions/mutations/createAuction"
 
 type Props = {
-  onSuccess?: (user: PromiseReturnType<typeof createAuction>) => void
+  onSuccess?: (auction: PromiseReturnType<typeof createAuction>) => void
 }
 
 const CreateAuctionForm = (props: Props) => {
@@ -31,12 +31,12 @@ const CreateAuctionForm = (props: Props) => {
   })
 
   async function handleSubmit(values: AuctionItemSchemaType) {
-    console.log(values)
     try {
       const result = await createAuctionMutation({
         ...values,
       })
       console.log(result)
+      props.onSuccess?.(result)
     } catch (error) {
       notifications.show({
         title: "Oops",
