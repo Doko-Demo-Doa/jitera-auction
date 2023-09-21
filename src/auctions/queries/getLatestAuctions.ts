@@ -12,8 +12,10 @@ export default async function getLatestAuctions(_ = null, { session }: Ctx) {
         in: auctions.map((auction) => auction.id),
       },
     },
-    orderBy: {},
+    orderBy: {
+      setPrice: "desc",
+    },
   })
 
-  return auctions
+  return auctions.map((n) => ({ ...n, highest: highestBidder }))
 }

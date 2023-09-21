@@ -3,9 +3,11 @@ import {
   Badge,
   Button,
   Card,
+  Center,
   Divider,
   Group,
   Loader,
+  NumberInput,
   Stack,
   Text,
   TextInput,
@@ -13,9 +15,13 @@ import {
 } from "@mantine/core"
 import { modals } from "@mantine/modals"
 import dayjs from "dayjs"
-import { Auction } from "@prisma/client"
+import { Auction, UserAuction } from "@prisma/client"
 
 import getLatestAuctions from "src/auctions/queries/getLatestAuctions"
+import { IconDatabase } from "@tabler/icons-react"
+import { useForm, zodResolver } from "@mantine/form"
+import { BidAuctionSchema, BidAuctionSchemaType } from "../schemas"
+import BidForm from "./BidForm"
 
 const AuctionList = () => {
   const [auctions, { isLoading }] = useQuery(getLatestAuctions, null)
@@ -24,18 +30,22 @@ const AuctionList = () => {
     return <Loader />
   }
 
-  function openBidModal(item: Auction) {
+  function openBidModal(item: Auction & { highest: UserAuction | null }) {
     modals.open({
       title: "Place Your Bid",
-      children: (
-        <>
-          <TextInput label="" withAsterisk min={0.2} placeholder="Price" mb="sm" data-autofocus />
-          <Button fullWidth color="violet" onClick={() => modals.closeAll()} mt="md">
-            Submit
-          </Button>
-        </>
-      ),
+      children: <BidForm item={item} />,
     })
+  }
+
+  if (!auctions.length) {
+    return (
+      <Center>
+        <Stack align="center" justify="center">
+          <IconDatabase />
+          <Title order={3}>No data</Title>
+        </Stack>
+      </Center>
+    )
   }
 
   return (
@@ -53,18 +63,27 @@ const AuctionList = () => {
 
               <Stack>
                 <Group>
-                  <Badge color="pink" variant="light">
+                  <Badge color="blue" variant="light">
                     Starting Price
                   </Badge>
                   <Text>{`${auction.startingPrice} USD`}</Text>
                 </Group>
 
                 <Group>
-                  <Badge color="yellow" variant="light">
-                    Current Highest Price
+                  <Badge color="pink" variant="light">
+                    Price Step
                   </Badge>
-                  <Text>{`${auction.startingPrice} USD`}</Text>
+                  <Text>{`${auction.priceStep} USD`}</Text>
                 </Group>
+
+                {auction.highest && (
+                  <Group>
+                    <Badge color="yellow" variant="light">
+                      Current Highest Price
+                    </Badge>
+                    <Text>{`${auction.startingPrice} USD`}</Text>
+                  </Group>
+                )}
               </Stack>
             </Group>
 
