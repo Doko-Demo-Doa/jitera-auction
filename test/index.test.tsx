@@ -11,7 +11,7 @@ vi.mock("public/logo.png", () => ({
   default: { src: "/logo.png" },
 }))
 
-test.skip("renders blitz documentation link", () => {
+test.skip("renders correctly", () => {
   // This is an example of how to ensure a specific item is in the document
   // But it's disabled by default (by test.skip) so the test doesn't fail
   // when you remove the default content from the page
@@ -27,6 +27,6 @@ test.skip("renders blitz documentation link", () => {
   }))
 
   const { getByText } = render(<Home />)
-  const linkElement = getByText(/Blitz Docs/i)
+  const linkElement = getByText(/Jitera/i)
   expect(linkElement).toBeInTheDocument()
 })

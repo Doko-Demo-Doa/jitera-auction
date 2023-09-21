@@ -1,6 +1,7 @@
 import { useQuery } from "@blitzjs/rpc"
 import {
   Badge,
+  Box,
   Button,
   Card,
   Center,
@@ -14,11 +15,12 @@ import {
 import { modals } from "@mantine/modals"
 import dayjs from "dayjs"
 import dayjsrelativeTime from "dayjs/plugin/relativeTime"
-import { Auction, UserAuction } from "@prisma/client"
+import { Auction, User, UserAuction } from "@prisma/client"
 
 import getLatestAuctions from "src/auctions/queries/getLatestAuctions"
 import { IconDatabase } from "@tabler/icons-react"
 import BidForm from "./BidForm"
+import formattingUtils from "src/core/utils/FormattingUtils"
 
 dayjs.extend(dayjsrelativeTime)
 
@@ -29,7 +31,15 @@ const AuctionList = () => {
     return <Loader />
   }
 
-  function openBidModal(item: Auction & { userAuction: (UserAuction | null)[] }) {
+  function openBidModal(
+    item: Auction & {
+      userAuction: {
+        setPrice: number
+        user: User | null
+        auction: Auction | null
+      }[]
+    }
+  ) {
     modals.open({
       title: "Place Your Bid",
       children: <BidForm item={item} onSuccess={() => refetch()} />,
@@ -76,10 +86,20 @@ const AuctionList = () => {
                 </Group>
 
                 {auction.userAuction?.[0] && (
-                  <Group>
-                    <Badge color="yellow" variant="light">
-                      Current Highest Price
-                    </Badge>
+                  <Group align="flex-start">
+                    <Box mr="xl">
+                      <Badge color="yellow" variant="light">
+                        Current Highest Price
+                      </Badge>
+                      <Text size="xs" ml="lg">
+                        {`By: ${
+                          formattingUtils.centerEllipsizeString(
+                            auction.userAuction?.[0].user?.email
+                          ) || ""
+                        }`}
+                      </Text>
+                    </Box>
+
                     <Text>{`${auction.userAuction?.[0].setPrice} USD`}</Text>
                   </Group>
                 )}

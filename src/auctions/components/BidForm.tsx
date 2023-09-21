@@ -1,14 +1,20 @@
 import { NumberInput, Button } from "@mantine/core"
 import { zodResolver, useForm } from "@mantine/form"
 import { modals } from "@mantine/modals"
-import { Auction, UserAuction } from "@prisma/client"
+import { Auction, User, UserAuction } from "@prisma/client"
 import React from "react"
 import { BidAuctionSchemaType, BidAuctionSchema } from "../schemas"
 import { useMutation } from "@blitzjs/rpc"
 import bidAuction from "../mutations/bidAuction"
 
 interface Props {
-  item: Auction & { userAuction: (UserAuction | null)[] }
+  item: Auction & {
+    userAuction: {
+      setPrice: number
+      user: User | null
+      auction: Auction | null
+    }[]
+  }
   onSuccess?: () => void
 }
 

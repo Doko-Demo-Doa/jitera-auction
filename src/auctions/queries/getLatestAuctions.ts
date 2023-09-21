@@ -7,6 +7,11 @@ export default async function getLatestAuctions(_ = null, { session }: Ctx) {
     include: {
       userAuction: {
         take: 1,
+        select: {
+          setPrice: true,
+          user: true,
+          auction: true,
+        },
         orderBy: {
           setPrice: "desc",
         },

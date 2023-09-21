@@ -1,9 +1,9 @@
 import Head from "next/head"
 import React from "react"
-import { BlitzLayout } from "@blitzjs/next"
+import { BlitzLayout, Routes } from "@blitzjs/next"
 import { useDisclosure, useHotkeys } from "@mantine/hooks"
-import { AppShell, Burger, Group, NavLink, Space, useMantineColorScheme } from "@mantine/core"
-import { IconHome2, IconHammer, IconLogout, IconUser } from "@tabler/icons-react"
+import { AppShell, Burger, Group, NavLink, Space, Text, useMantineColorScheme } from "@mantine/core"
+import { IconHome2, IconHammer, IconLogout, IconUser, IconMoneybag } from "@tabler/icons-react"
 import { useRouter } from "next/router"
 import { useMutation } from "@blitzjs/rpc"
 import logout from "src/auth/mutations/logout"
@@ -58,6 +58,15 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode; withoutN
               active={router.route === "/auctions/create"}
               leftSection={<IconHammer size="1rem" stroke={1.5} />}
             />
+            <NavLink
+              label="Get Balance"
+              onClick={() => {
+                router.push(Routes.FaucetPage()).catch(console.log)
+                toggle()
+              }}
+              active={router.route === "/faucet"}
+              leftSection={<IconMoneybag size="1rem" stroke={1.5} />}
+            />
 
             <Space style={{ flexGrow: 2 }} />
 
@@ -79,6 +88,7 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode; withoutN
         <AppShell.Header>
           <Group px="md" style={{ height: "100%" }}>
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="md" />
+            <Text>Jitera</Text>
           </Group>
         </AppShell.Header>
 
