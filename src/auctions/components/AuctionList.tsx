@@ -7,10 +7,8 @@ import {
   Divider,
   Group,
   Loader,
-  NumberInput,
   Stack,
   Text,
-  TextInput,
   Title,
 } from "@mantine/core"
 import { modals } from "@mantine/modals"
@@ -19,8 +17,6 @@ import { Auction, UserAuction } from "@prisma/client"
 
 import getLatestAuctions from "src/auctions/queries/getLatestAuctions"
 import { IconDatabase } from "@tabler/icons-react"
-import { useForm, zodResolver } from "@mantine/form"
-import { BidAuctionSchema, BidAuctionSchemaType } from "../schemas"
 import BidForm from "./BidForm"
 
 const AuctionList = () => {
@@ -30,7 +26,7 @@ const AuctionList = () => {
     return <Loader />
   }
 
-  function openBidModal(item: Auction & { highest: UserAuction | null }) {
+  function openBidModal(item: Auction & { userAuction: (UserAuction | null)[] }) {
     modals.open({
       title: "Place Your Bid",
       children: <BidForm item={item} />,
@@ -76,12 +72,12 @@ const AuctionList = () => {
                   <Text>{`${auction.priceStep} USD`}</Text>
                 </Group>
 
-                {auction.highest && (
+                {auction.userAuction?.[0] && (
                   <Group>
                     <Badge color="yellow" variant="light">
                       Current Highest Price
                     </Badge>
-                    <Text>{`${auction.startingPrice} USD`}</Text>
+                    <Text>{`${auction.userAuction?.[0].setPrice} USD`}</Text>
                   </Group>
                 )}
               </Stack>

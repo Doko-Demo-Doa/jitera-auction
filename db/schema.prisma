@@ -22,10 +22,11 @@ model User {
   role           String   @default("USER")
   balance        Int      @default(0)
 
-  tokens      Token[]
-  sessions    Session[]
-  userAuction UserAuction[]
-  auction     Auction[]
+  tokens             Token[]
+  sessions           Session[]
+  userAuction        UserAuction[]
+  auction            Auction[]
+  UserAuctionHistory UserAuctionHistory[]
 }
 
 model Session {
@@ -61,21 +62,22 @@ model Token {
 }
 
 model Auction {
-  id            Int           @id @default(autoincrement())
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  expiresAt     DateTime?
-  startsAt      DateTime
-  endsAt        DateTime
-  priceStep     Int
-  startingPrice Int
-  isEnded       Int
-  name          String
-  currency      String
-  description   String
-  userId        Int
-  createdBy     User          @relation(fields: [userId], references: [id])
-  userAuction   UserAuction[]
+  id                 Int                  @id @default(autoincrement())
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  expiresAt          DateTime?
+  startsAt           DateTime
+  endsAt             DateTime
+  priceStep          Int
+  startingPrice      Int
+  isEnded            Int
+  name               String
+  currency           String
+  description        String
+  userId             Int
+  createdBy          User                 @relation(fields: [userId], references: [id])
+  userAuction        UserAuction[]
+  userAuctionHistory UserAuctionHistory[]
 }
 
 model UserAuction {
@@ -83,6 +85,19 @@ model UserAuction {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   expiresAt DateTime?
+  userId    Int
+  auctionId Int
+  setPrice  Int
+
+  user    User?    @relation(fields: [userId], references: [id])
+  auction Auction? @relation(fields: [auctionId], references: [id])
+}
+
+// Same with user auction, but read only
+model UserAuctionHistory {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   userId    Int
   auctionId Int
   setPrice  Int
