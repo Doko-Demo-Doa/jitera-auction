@@ -1,8 +1,8 @@
 import Head from "next/head"
 import React from "react"
 import { BlitzLayout } from "@blitzjs/next"
-import { useDisclosure } from "@mantine/hooks"
-import { AppShell, Burger, Group, NavLink, Space } from "@mantine/core"
+import { useDisclosure, useHotkeys } from "@mantine/hooks"
+import { AppShell, Burger, Group, NavLink, Space, useMantineColorScheme } from "@mantine/core"
 import { IconHome2, IconHammer, IconLogout, IconUser } from "@tabler/icons-react"
 import { useRouter } from "next/router"
 import { useMutation } from "@blitzjs/rpc"
@@ -18,6 +18,11 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode; withoutN
   const user = useCurrentUser()
   const [opened, { toggle }] = useDisclosure()
   const router = useRouter()
+
+  const { colorScheme, setColorScheme } = useMantineColorScheme()
+
+  // https://mantine.dev/guides/dark-theme/
+  useHotkeys([["mod+J", () => setColorScheme(colorScheme === "dark" ? "light" : "dark")]])
 
   return (
     <>
@@ -77,7 +82,13 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode; withoutN
           </Group>
         </AppShell.Header>
 
-        <AppShell.Main>{children}</AppShell.Main>
+        <AppShell.Main
+          style={(theme) => ({
+            backgroundColor: colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0],
+          })}
+        >
+          {children}
+        </AppShell.Main>
       </AppShell>
     </>
   )
