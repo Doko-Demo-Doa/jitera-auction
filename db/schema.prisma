@@ -20,11 +20,12 @@ model User {
   email          String   @unique
   hashedPassword String?
   role           String   @default("USER")
+  balance        Int      @default(0)
 
   tokens      Token[]
   sessions    Session[]
-  UserAuction UserAuction[]
-  Auction     Auction[]
+  userAuction UserAuction[]
+  auction     Auction[]
 }
 
 model Session {
@@ -84,6 +85,7 @@ model UserAuction {
   expiresAt DateTime?
   userId    Int
   auctionId Int
+  setPrice  Int
 
   user    User?    @relation(fields: [userId], references: [id])
   auction Auction? @relation(fields: [auctionId], references: [id])

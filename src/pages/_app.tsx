@@ -2,6 +2,7 @@ import React, { Suspense } from "react"
 import { ErrorFallbackProps, ErrorComponent, ErrorBoundary, AppProps } from "@blitzjs/next"
 import { AuthenticationError, AuthorizationError } from "blitz"
 import { MantineProvider } from "@mantine/core"
+import { ModalsProvider } from "@mantine/modals"
 import { NavigationProgress } from "@mantine/nprogress"
 import "@mantine/core/styles.css"
 import "@mantine/dates/styles.css"
@@ -36,8 +37,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundary FallbackComponent={RootErrorFallback}>
       <MantineProvider theme={theme}>
-        <NavigationProgress />
-        <Suspense fallback={<div />}>{getLayout(<Component {...pageProps} />)}</Suspense>
+        <ModalsProvider>
+          <NavigationProgress />
+          <Suspense fallback={<div />}>{getLayout(<Component {...pageProps} />)}</Suspense>
+        </ModalsProvider>
       </MantineProvider>
     </ErrorBoundary>
   )

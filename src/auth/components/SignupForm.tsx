@@ -1,8 +1,9 @@
-import { LabeledTextField } from "src/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "src/core/components/Form"
+import { FORM_ERROR } from "src/core/components/Form"
 import signup from "src/auth/mutations/signup"
-import { Signup } from "src/auth/schemas"
+import { SignupSchema, SignupType } from "src/auth/schemas"
 import { useMutation } from "@blitzjs/rpc"
+import { TextInput, Title } from "@mantine/core"
+import { useForm, zodResolver } from "@mantine/form"
 
 type SignupFormProps = {
   onSuccess?: () => void
@@ -10,31 +11,50 @@ type SignupFormProps = {
 
 export const SignupForm = (props: SignupFormProps) => {
   const [signupMutation] = useMutation(signup)
+
+  const form = useForm<SignupType>({
+    validate: zodResolver(SignupSchema),
+    initialValues: {
+      email: "",
+      password: "",
+    },
+  })
+
+  async function handleSubmit(values: SignupType) {
+    try {
+      await signupMutation(values)
+      props.onSuccess?.()
+    } catch (error: any) {
+      if (error.code === "P2002" && error.meta?.target?.includes("email")) {
+        // This error comes from Prisma
+        return { email: "This email is already being used" }
+      } else {
+        return { [FORM_ERROR]: error.toString() }
+      }
+    }
+  }
+
   return (
     <div>
-      <h1>Create an Account</h1>
+      <Title>Create an Account</Title>
 
-      <Form
-        submitText="Create Account"
-        schema={Signup}
-        initialValues={{ email: "", password: "" }}
-        onSubmit={async (values) => {
-          try {
-            await signupMutation(values)
-            props.onSuccess?.()
-          } catch (error: any) {
-            if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-              // This error comes from Prisma
-              return { email: "This email is already being used" }
-            } else {
-              return { [FORM_ERROR]: error.toString() }
-            }
-          }
-        }}
-      >
-        <LabeledTextField name="email" label="Email" placeholder="Email" />
-        <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
-      </Form>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <TextInput
+          withAsterisk
+          label="Email"
+          placeholder="Your email address"
+          maxLength={200}
+          {...form.getInputProps("email")}
+        />
+
+        <TextInput
+          withAsterisk
+          label="Password"
+          placeholder="Your password"
+          maxLength={200}
+          {...form.getInputProps("password")}
+        />
+      </form>
     </div>
   )
 }

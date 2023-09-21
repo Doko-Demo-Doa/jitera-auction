@@ -11,10 +11,12 @@ export const password = z
   .max(100)
   .transform((str) => str.trim())
 
-export const Signup = z.object({
+export const SignupSchema = z.object({
   email,
   password,
 })
+
+export type SignupType = z.infer<typeof SignupSchema>
 
 export const Login = z.object({
   email,

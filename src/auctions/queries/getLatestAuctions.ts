@@ -6,5 +6,14 @@ export default async function getLatestAuctions(_ = null, { session }: Ctx) {
     take: 10,
   })
 
+  const highestBidder = await db.userAuction.findFirst({
+    where: {
+      auctionId: {
+        in: auctions.map((auction) => auction.id),
+      },
+    },
+    orderBy: {},
+  })
+
   return auctions
 }

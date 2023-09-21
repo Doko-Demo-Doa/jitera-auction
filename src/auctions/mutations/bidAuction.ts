@@ -14,6 +14,7 @@ export default resolver.pipe(
       data: {
         auctionId: params.auctionId,
         userId: user.id,
+        setPrice: params.setPrice,
       },
     })
 

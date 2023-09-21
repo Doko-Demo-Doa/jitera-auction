@@ -69,7 +69,7 @@ export type AuctionItemSchemaType = z.infer<typeof AuctionItemSchema>
 
 export const BidAuctionSchema = z.object({
   auctionId: z.number(),
-  amount: z.number().min(1).nonnegative(),
+  setPrice: z.number().min(1).nonnegative(),
 })
 
 export type BidAuctionSchemaType = z.infer<typeof BidAuctionSchema>
