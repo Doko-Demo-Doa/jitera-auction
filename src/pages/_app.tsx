@@ -3,10 +3,9 @@ import { ErrorFallbackProps, ErrorComponent, ErrorBoundary, AppProps } from "@bl
 import { AuthenticationError, AuthorizationError } from "blitz"
 import { MantineProvider } from "@mantine/core"
 import { ModalsProvider } from "@mantine/modals"
-import { NavigationProgress } from "@mantine/nprogress"
+import { PagesProgressBar as ProgressBar } from "next-nprogress-bar"
 import "@mantine/core/styles.css"
 import "@mantine/dates/styles.css"
-import "@mantine/nprogress/styles.css"
 
 import { withBlitz } from "src/blitz-client"
 import "src/styles/globals.css"
@@ -38,7 +37,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ErrorBoundary FallbackComponent={RootErrorFallback}>
       <MantineProvider theme={theme}>
         <ModalsProvider>
-          <NavigationProgress />
+          <ProgressBar
+            height="2px"
+            color="#32a85e"
+            options={{ showSpinner: false }}
+            shallowRouting
+          />
           <Suspense fallback={<div />}>{getLayout(<Component {...pageProps} />)}</Suspense>
         </ModalsProvider>
       </MantineProvider>

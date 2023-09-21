@@ -13,11 +13,14 @@ import {
 } from "@mantine/core"
 import { modals } from "@mantine/modals"
 import dayjs from "dayjs"
+import dayjsrelativeTime from "dayjs/plugin/relativeTime"
 import { Auction, UserAuction } from "@prisma/client"
 
 import getLatestAuctions from "src/auctions/queries/getLatestAuctions"
 import { IconDatabase } from "@tabler/icons-react"
 import BidForm from "./BidForm"
+
+dayjs.extend(dayjsrelativeTime)
 
 const AuctionList = () => {
   const [auctions, { isLoading, refetch }] = useQuery(getLatestAuctions, null)
@@ -87,7 +90,9 @@ const AuctionList = () => {
 
             <Group justify="flex-end">
               <Text size="sm">
-                {`Ends at: ${dayjs(auction.endsAt).format("DD/MM/YYYY HH:mm")}`}
+                {`Ends at: ${dayjs(auction.endsAt).format("DD/MM/YYYY HH:mm")} - ${dayjs(
+                  auction.endsAt
+                ).fromNow()}`}
               </Text>
 
               <Button color="green" fullWidth={false} onClick={() => openBidModal(auction)}>
