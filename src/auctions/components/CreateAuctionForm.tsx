@@ -25,13 +25,12 @@ const CreateAuctionForm = (props: Props) => {
       priceStep: 1,
       currency: "USD",
       isEnded: 0,
-      startsAt: new Date(),
+      startsAt: undefined,
       endsAt: dayjs().add(2, "days").toDate(),
     },
   })
 
   async function handleSubmit(values: AuctionItemSchemaType) {
-    // Code
     console.log(values)
     try {
       const result = await createAuctionMutation({
@@ -86,7 +85,6 @@ const CreateAuctionForm = (props: Props) => {
 
         <Group grow align="start">
           <DateTimePicker
-            withAsterisk
             label="Starting Date"
             placeholder="Pick date and time"
             mt="sm"

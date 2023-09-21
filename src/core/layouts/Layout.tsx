@@ -2,21 +2,27 @@ import Head from "next/head"
 import React from "react"
 import { BlitzLayout } from "@blitzjs/next"
 import { useDisclosure } from "@mantine/hooks"
-import { AppShell, Burger, NavLink } from "@mantine/core"
-import {
-  IconHome2,
-  IconGauge,
-  IconChevronRight,
-  IconActivity,
-  IconCircleOff,
-  IconHammer,
-} from "@tabler/icons-react"
+import { AppShell, Burger, Group, NavLink } from "@mantine/core"
+import { IconHome2, IconHammer } from "@tabler/icons-react"
+import { useRouter } from "next/router"
+
+const MENU = [
+  {
+    to: "/",
+    label: "Home",
+  },
+  {
+    to: "/auctions/create",
+    label: "Create Auction",
+  },
+]
 
 const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode }> = ({
   title,
   children,
 }) => {
   const [opened, { toggle }] = useDisclosure()
+  const router = useRouter()
 
   return (
     <>
@@ -31,17 +37,29 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode }> = ({
         padding="md"
       >
         <AppShell.Navbar p="md">
-          <NavLink label="Home" leftSection={<IconHome2 size="1rem" stroke={1.5} />} />
+          <NavLink
+            label="Home"
+            onClick={() => {
+              router.push("/").catch(console.log)
+              toggle()
+            }}
+            leftSection={<IconHome2 size="1rem" stroke={1.5} />}
+          />
           <NavLink
             label="Create Auction"
+            onClick={() => {
+              router.push("/auctions/create").catch(console.log)
+              toggle()
+            }}
             active
             leftSection={<IconHammer size="1rem" stroke={1.5} />}
           />
         </AppShell.Navbar>
 
         <AppShell.Header>
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <div>Jitera</div>
+          <Group px="md" style={{ height: "100%" }}>
+            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="md" />
+          </Group>
         </AppShell.Header>
 
         <AppShell.Main>{children}</AppShell.Main>

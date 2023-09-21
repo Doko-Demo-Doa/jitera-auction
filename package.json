@@ -36,6 +36,7 @@
     "@mantine/hooks": "7.0.0",
     "@mantine/modals": "7.0.0",
     "@mantine/notifications": "7.0.0",
+    "@mantine/nprogress": "7.0.0",
     "@mantine/vanilla-extract": "7.0.0",
     "@prisma/client": "5.3.1",
     "@tabler/icons-react": "2.34.0",

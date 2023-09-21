@@ -2,8 +2,10 @@ import React from "react"
 import { ErrorFallbackProps, ErrorComponent, ErrorBoundary, AppProps } from "@blitzjs/next"
 import { AuthenticationError, AuthorizationError } from "blitz"
 import { MantineProvider } from "@mantine/core"
+import { NavigationProgress } from "@mantine/nprogress"
 import "@mantine/core/styles.css"
 import "@mantine/dates/styles.css"
+import "@mantine/nprogress/styles.css"
 
 import { withBlitz } from "src/blitz-client"
 import "src/styles/globals.css"
@@ -33,7 +35,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
   return (
     <ErrorBoundary FallbackComponent={RootErrorFallback}>
-      <MantineProvider theme={theme}>{getLayout(<Component {...pageProps} />)}</MantineProvider>
+      <MantineProvider theme={theme}>
+        <NavigationProgress />
+        {getLayout(<Component {...pageProps} />)}
+      </MantineProvider>
     </ErrorBoundary>
   )
 }

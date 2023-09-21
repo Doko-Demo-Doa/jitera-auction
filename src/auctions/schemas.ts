@@ -13,7 +13,17 @@ export const AuctionItemSchema = z
     startsAt: z
       .date()
       .optional()
+      .nullable()
+      .default(null)
+      .transform((d) => {
+        if (!d) {
+          return undefined
+        }
+      })
       .refine((d) => {
+        if (!d) {
+          return true
+        }
         const now = dayjs()
         const start = dayjs(d)
         if (now.isBefore(start)) {
@@ -34,7 +44,7 @@ export const AuctionItemSchema = z
   })
   .refine(
     (data) => {
-      const start = dayjs(data.startsAt)
+      const start = dayjs(data.startsAt || new Date())
       const end = dayjs(data.endsAt)
 
       if (end.isBefore(start) || end.isSame(start)) {
