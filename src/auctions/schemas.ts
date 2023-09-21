@@ -64,3 +64,12 @@ export const AuctionItemSchema = z
   )
 
 export type AuctionItemSchemaType = z.infer<typeof AuctionItemSchema>
+
+/////// BID
+
+export const BidAuctionSchema = z.object({
+  auctionId: z.number(),
+  amount: z.number().min(1).nonnegative(),
+})
+
+export type BidAuctionSchemaType = z.infer<typeof BidAuctionSchema>

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import { ErrorFallbackProps, ErrorComponent, ErrorBoundary, AppProps } from "@blitzjs/next"
 import { AuthenticationError, AuthorizationError } from "blitz"
 import { MantineProvider } from "@mantine/core"
@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ErrorBoundary FallbackComponent={RootErrorFallback}>
       <MantineProvider theme={theme}>
         <NavigationProgress />
-        {getLayout(<Component {...pageProps} />)}
+        <Suspense fallback={<div />}>{getLayout(<Component {...pageProps} />)}</Suspense>
       </MantineProvider>
     </ErrorBoundary>
   )

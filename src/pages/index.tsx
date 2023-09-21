@@ -1,7 +1,9 @@
-import Layout from "src/core/layouts/Layout"
 import { BlitzPage } from "@blitzjs/next"
-import { Button } from "@mantine/core"
+import { Button, Space } from "@mantine/core"
 import { useRouter } from "next/router"
+
+import Layout from "src/core/layouts/Layout"
+import AuctionList from "src/auctions/components/AuctionList"
 
 const Home: BlitzPage = () => {
   const router = useRouter()
@@ -15,6 +17,8 @@ const Home: BlitzPage = () => {
       >
         Create Auction
       </Button>
+      <Space h="xl" />
+      <AuctionList />
     </Layout>
   )
 }

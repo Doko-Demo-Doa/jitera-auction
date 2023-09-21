@@ -14,7 +14,7 @@ type Props = {
 }
 
 const CreateAuctionForm = (props: Props) => {
-  const [createAuctionMutation] = useMutation(createAuction)
+  const [createAuctionMutation, { isLoading }] = useMutation(createAuction)
 
   const form = useForm<AuctionItemSchemaType>({
     validate: zodResolver(AuctionItemSchema),
@@ -105,7 +105,7 @@ const CreateAuctionForm = (props: Props) => {
 
         <Space h="xl" />
 
-        <Button color="green.7" type="submit">
+        <Button color="green.7" type="submit" loading={isLoading} disabled={isLoading}>
           Create Auction
         </Button>
       </Stack>
