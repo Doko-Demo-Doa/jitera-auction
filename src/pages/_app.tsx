@@ -3,6 +3,7 @@ import { ErrorFallbackProps, ErrorComponent, ErrorBoundary, AppProps } from "@bl
 import { AuthenticationError, AuthorizationError } from "blitz"
 import { MantineProvider } from "@mantine/core"
 import "@mantine/core/styles.css"
+import "@mantine/dates/styles.css"
 
 import { withBlitz } from "src/blitz-client"
 import "src/styles/globals.css"
