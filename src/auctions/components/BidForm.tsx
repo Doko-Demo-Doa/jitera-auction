@@ -15,7 +15,7 @@ interface Props {
 const BidForm: React.FC<Props> = ({ item, onSuccess }) => {
   const highestBidder = item.userAuction?.[0]
   const min = highestBidder ? highestBidder.setPrice : item.startingPrice + item.priceStep
-  const [bidAuctionMutation] = useMutation(bidAuction)
+  const [bidAuctionMutation, { isLoading }] = useMutation(bidAuction)
 
   const form = useForm<BidAuctionSchemaType>({
     validate: zodResolver(BidAuctionSchema),
@@ -31,7 +31,7 @@ const BidForm: React.FC<Props> = ({ item, onSuccess }) => {
       console.log(resp)
       onSuccess?.()
     } catch (error: any) {
-      console.log(error)
+      form.setErrors({ asyncError: error.message })
     }
   }
 
@@ -47,14 +47,15 @@ const BidForm: React.FC<Props> = ({ item, onSuccess }) => {
         mb="sm"
         data-autofocus
         {...form.getInputProps("setPrice")}
+        error={form.errors.asyncError}
       />
       <Button
         fullWidth
         color="violet"
-        onClick={() => modals.closeAll()}
         mt="md"
         type="submit"
-        disabled={form.values.setPrice < min}
+        loading={isLoading}
+        disabled={form.values.setPrice < min || isLoading}
       >
         Submit
       </Button>
