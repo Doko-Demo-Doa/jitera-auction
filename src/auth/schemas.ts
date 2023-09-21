@@ -18,10 +18,12 @@ export const SignupSchema = z.object({
 
 export type SignupType = z.infer<typeof SignupSchema>
 
-export const Login = z.object({
+export const LoginSchema = z.object({
   email,
   password: z.string(),
 })
+
+export type LoginType = z.infer<typeof LoginSchema>
 
 export const ForgotPassword = z.object({
   email,

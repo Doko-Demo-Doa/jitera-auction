@@ -10,7 +10,8 @@
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "prepare": "husky install",
-    "postinstall": "blitz prisma generate && blitz codegen && NODE_ENV=production blitz prisma migrate deploy"
+    "postinstall": "blitz prisma generate && blitz codegen && NODE_ENV=production blitz prisma migrate deploy",
+    "migrate": "blitz prisma migrate dev --name init"
   },
   "prisma": {
     "schema": "db/schema.prisma"

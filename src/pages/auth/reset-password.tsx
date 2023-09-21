@@ -64,6 +64,10 @@ const ResetPasswordPage: BlitzPage = () => {
 }
 
 ResetPasswordPage.redirectAuthenticatedTo = "/"
-ResetPasswordPage.getLayout = (page) => <Layout title="Reset Your Password">{page}</Layout>
+ResetPasswordPage.getLayout = (page) => (
+  <Layout title="Reset Your Password" withoutNav>
+    {page}
+  </Layout>
+)
 
 export default ResetPasswordPage

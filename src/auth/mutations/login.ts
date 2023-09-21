@@ -3,10 +3,10 @@ import { resolver } from "@blitzjs/rpc"
 import { AuthenticationError } from "blitz"
 import db from "db"
 import { Role } from "types"
-import { Login } from "../schemas"
+import { LoginSchema } from "../schemas"
 
 export const authenticateUser = async (rawEmail: string, rawPassword: string) => {
-  const { email, password } = Login.parse({ email: rawEmail, password: rawPassword })
+  const { email, password } = LoginSchema.parse({ email: rawEmail, password: rawPassword })
   const user = await db.user.findFirst({ where: { email } })
   if (!user) throw new AuthenticationError()
 
@@ -22,7 +22,7 @@ export const authenticateUser = async (rawEmail: string, rawPassword: string) =>
   return rest
 }
 
-export default resolver.pipe(resolver.zod(Login), async ({ email, password }, ctx) => {
+export default resolver.pipe(resolver.zod(LoginSchema), async ({ email, password }, ctx) => {
   // This throws an error if credentials are invalid
   const user = await authenticateUser(email, password)
 
