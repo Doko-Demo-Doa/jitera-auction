@@ -1,7 +1,7 @@
 import { resolver } from "@blitzjs/rpc"
 import db from "db"
 import { NotFoundError } from "blitz"
-import { BidPriceError } from "src/core/errors/CustomError"
+import { BidPriceError, InvalidBidError } from "src/core/errors/CustomError"
 import { BidAuctionSchema } from "src/auctions/schemas"
 
 export default resolver.pipe(
@@ -16,6 +16,9 @@ export default resolver.pipe(
       },
     })
     if (!targetAuction) throw new NotFoundError()
+    if (targetAuction.isEnded) throw new InvalidBidError({ message: "Auction is ended" })
+    if (targetAuction.userId === user.id)
+      throw new InvalidBidError({ message: "You cannot bid your own auction" })
 
     // An entry exist
     const myBid = await db.userAuction.findFirst({

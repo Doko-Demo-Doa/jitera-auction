@@ -34,6 +34,8 @@ const CreateAuctionForm = (props: Props) => {
     try {
       const result = await createAuctionMutation({
         ...values,
+        name: values.name.trim(),
+        description: values.description.trim(),
       })
       console.log(result)
       props.onSuccess?.(result)

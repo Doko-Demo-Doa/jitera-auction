@@ -1,16 +1,9 @@
 import Head from "next/head"
 import React from "react"
-import { BlitzLayout, Routes } from "@blitzjs/next"
+import { BlitzLayout } from "@blitzjs/next"
 import { useDisclosure } from "@mantine/hooks"
 import { AppShell, Burger, Group, NavLink, Space } from "@mantine/core"
-import {
-  IconHome2,
-  IconHammer,
-  IconUserPlus,
-  IconLogin2,
-  IconLogout,
-  IconUser,
-} from "@tabler/icons-react"
+import { IconHome2, IconHammer, IconLogout, IconUser } from "@tabler/icons-react"
 import { useRouter } from "next/router"
 import { useMutation } from "@blitzjs/rpc"
 import logout from "src/auth/mutations/logout"
@@ -48,6 +41,7 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode; withoutN
                 router.push("/").catch(console.log)
                 toggle()
               }}
+              active={router.route === "/"}
               leftSection={<IconHome2 size="1rem" stroke={1.5} />}
             />
             <NavLink
@@ -56,7 +50,7 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode; withoutN
                 router.push("/auctions/create").catch(console.log)
                 toggle()
               }}
-              active
+              active={router.route === "/auctions/create"}
               leftSection={<IconHammer size="1rem" stroke={1.5} />}
             />
 

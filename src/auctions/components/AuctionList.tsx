@@ -20,7 +20,7 @@ import { IconDatabase } from "@tabler/icons-react"
 import BidForm from "./BidForm"
 
 const AuctionList = () => {
-  const [auctions, { isLoading }] = useQuery(getLatestAuctions, null)
+  const [auctions, { isLoading, refetch }] = useQuery(getLatestAuctions, null)
 
   if (isLoading) {
     return <Loader />
@@ -29,7 +29,7 @@ const AuctionList = () => {
   function openBidModal(item: Auction & { userAuction: (UserAuction | null)[] }) {
     modals.open({
       title: "Place Your Bid",
-      children: <BidForm item={item} />,
+      children: <BidForm item={item} onSuccess={() => refetch()} />,
     })
   }
 

@@ -14,7 +14,9 @@ interface Props {
 
 const BidForm: React.FC<Props> = ({ item, onSuccess }) => {
   const highestBidder = item.userAuction?.[0]
-  const min = highestBidder ? highestBidder.setPrice : item.startingPrice + item.priceStep
+  const min = highestBidder
+    ? highestBidder.setPrice + item.priceStep
+    : item.startingPrice + item.priceStep
   const [bidAuctionMutation, { isLoading }] = useMutation(bidAuction)
 
   const form = useForm<BidAuctionSchemaType>({
