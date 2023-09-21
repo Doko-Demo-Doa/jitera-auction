@@ -3,9 +3,9 @@ import { CronJob } from "quirrel/blitz"
 
 export default CronJob(
   "api/minutelyCron", // the path of this API route
-  "* * * * *", // cron schedule (see https://crontab.guru)
+  "*/3 * * * *", // cron schedule (see https://crontab.guru)
   async () => {
-    console.log("A 2-min has begun!")
+    console.log("A 3-min has begun!")
     const resp = await db.auction.findMany({
       where: {
         endsAt: {

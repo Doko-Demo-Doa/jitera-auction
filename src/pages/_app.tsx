@@ -4,8 +4,10 @@ import { AuthenticationError, AuthorizationError } from "blitz"
 import { MantineProvider } from "@mantine/core"
 import { ModalsProvider } from "@mantine/modals"
 import { PagesProgressBar as ProgressBar } from "next-nprogress-bar"
+import { Notifications } from "@mantine/notifications"
 import "@mantine/core/styles.css"
 import "@mantine/dates/styles.css"
+import "@mantine/notifications/styles.css"
 
 import { withBlitz } from "src/blitz-client"
 import "src/styles/globals.css"
@@ -43,6 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             options={{ showSpinner: false }}
             shallowRouting
           />
+          <Notifications />
           <Suspense fallback={<div />}>{getLayout(<Component {...pageProps} />)}</Suspense>
         </ModalsProvider>
       </MantineProvider>

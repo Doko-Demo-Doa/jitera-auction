@@ -6,10 +6,10 @@ import { Routes } from "@blitzjs/next"
 import { useForm, zodResolver } from "@mantine/form"
 import { Title, TextInput, Button, Container, Anchor, Space, Stack } from "@mantine/core"
 
-import { LabeledTextField } from "src/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "src/core/components/Form"
 import login from "src/auth/mutations/login"
 import { LoginSchema, LoginType } from "src/auth/schemas"
+import { notifications } from "@mantine/notifications"
 
 type LoginFormProps = {
   onSuccess?: (user: PromiseReturnType<typeof login>) => void
@@ -30,6 +30,11 @@ export const LoginForm = (props: LoginFormProps) => {
       const user = await loginMutation(values)
       props.onSuccess?.(user)
     } catch (error: any) {
+      notifications.show({
+        title: "Oops",
+        message: "Email or password is incorrect",
+        color: "red",
+      })
       if (error instanceof AuthenticationError) {
         return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
       } else {

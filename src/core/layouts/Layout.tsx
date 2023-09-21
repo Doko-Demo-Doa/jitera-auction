@@ -1,5 +1,5 @@
 import Head from "next/head"
-import React from "react"
+import React, { useEffect } from "react"
 import { BlitzLayout, Routes } from "@blitzjs/next"
 import { useDisclosure, useHotkeys } from "@mantine/hooks"
 import { AppShell, Burger, Group, NavLink, Space, Text, useMantineColorScheme } from "@mantine/core"
@@ -73,15 +73,17 @@ const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode; withoutN
             {user && (
               <NavLink label={user.email} leftSection={<IconUser size="1rem" stroke={1.5} />} />
             )}
-            <NavLink
-              label="Log out"
-              onClick={async () => {
-                await logoutMutation()
-                toggle()
-                router.push("/auth/login").catch(console.log)
-              }}
-              leftSection={<IconLogout size="1rem" stroke={1.5} />}
-            />
+            {user && (
+              <NavLink
+                label={"Log out"}
+                onClick={async () => {
+                  await logoutMutation()
+                  toggle()
+                  router.push("/auth/login").catch(console.log)
+                }}
+                leftSection={<IconLogout size="1rem" stroke={1.5} />}
+              />
+            )}
           </AppShell.Navbar>
         )}
 
