@@ -1,7 +1,7 @@
 import { PromiseReturnType } from "blitz"
 import { useMutation } from "@blitzjs/rpc"
 import { useForm, zodResolver } from "@mantine/form"
-import { Group, NumberInput, TextInput, Textarea } from "@mantine/core"
+import { Button, Group, NumberInput, Space, Stack, TextInput, Textarea } from "@mantine/core"
 import { DateTimePicker } from "@mantine/dates"
 import dayjs from "dayjs"
 
@@ -36,54 +36,65 @@ const CreateAuctionForm = (props: Props) => {
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <TextInput
-        withAsterisk
-        label="Name"
-        placeholder="E.g: Old watch"
-        {...form.getInputProps("name")}
-      />
-      <Textarea
-        withAsterisk
-        label="Description"
-        placeholder="Type our description here"
-        mt="sm"
-        {...form.getInputProps("description")}
-      />
-      <NumberInput
-        withAsterisk
-        label="Starting Price"
-        placeholder="Enter the starting price."
-        mt="sm"
-        maxLength={20}
-        {...form.getInputProps("startingPrice")}
-      />
-      <NumberInput
-        withAsterisk
-        label="Price step"
-        placeholder="Enter the minimum bidding price. Must be higher than starting price and non-zero."
-        mt="sm"
-        maxLength={20}
-        min={0.1}
-        {...form.getInputProps("priceStep")}
-      />
-
-      <Group grow>
-        <DateTimePicker
+      <Stack>
+        <TextInput
           withAsterisk
-          label="Starting Date"
-          placeholder="Pick date and time"
+          label="Name"
+          placeholder="E.g: Old watch"
+          {...form.getInputProps("name")}
+        />
+        <Textarea
+          withAsterisk
+          label="Description"
+          placeholder="Type our description here"
           mt="sm"
-          {...form.getInputProps("startsAt")}
+          {...form.getInputProps("description")}
+        />
+        <NumberInput
+          withAsterisk
+          label="Starting Price"
+          placeholder="Enter the starting price."
+          mt="sm"
+          maxLength={20}
+          {...form.getInputProps("startingPrice")}
+        />
+        <NumberInput
+          withAsterisk
+          label="Price step"
+          placeholder="Enter the minimum bidding price. Must be higher than starting price and non-zero."
+          mt="sm"
+          maxLength={20}
+          min={0.1}
+          {...form.getInputProps("priceStep")}
         />
 
-        <DateTimePicker
-          withAsterisk
-          label="Starting Date"
-          placeholder="Pick date and time"
-          mt="sm"
-          {...form.getInputProps("startsAt")}
-        />
-      </Group>
+        <Group grow align="start">
+          <DateTimePicker
+            withAsterisk
+            label="Starting Date"
+            placeholder="Pick date and time"
+            mt="sm"
+            withSeconds={false}
+            {...form.getInputProps("startsAt")}
+            value={undefined}
+          />
+
+          <DateTimePicker
+            withAsterisk
+            label="End Date"
+            placeholder="Pick date and time"
+            mt="sm"
+            withSeconds={false}
+            {...form.getInputProps("endsAt")}
+          />
+        </Group>
+
+        <Space h="xl" />
+
+        <Button color="green.7" type="submit">
+          Create Auction
+        </Button>
+      </Stack>
     </form>
   )
 }

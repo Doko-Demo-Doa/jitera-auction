@@ -3,7 +3,7 @@ import { useForm } from "@mantine/form"
 
 import Layout from "src/core/layouts/Layout"
 import CreateAuctionForm from "src/auctions/components/CreateAuctionForm"
-import { Container } from "@mantine/core"
+import { Container, Space, Title } from "@mantine/core"
 
 const Page: BlitzPage = () => {
   const form = useForm({
@@ -20,6 +20,10 @@ const Page: BlitzPage = () => {
   return (
     <Layout title="Jitera Auctions">
       <Container size="lg">
+        <Title order={3}>Create Auction</Title>
+
+        <Space h="xl" />
+
         <CreateAuctionForm />
       </Container>
     </Layout>
