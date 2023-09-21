@@ -24,6 +24,7 @@ model User {
   tokens      Token[]
   sessions    Session[]
   UserAuction UserAuction[]
+  Auction     Auction[]
 }
 
 model Session {
@@ -71,7 +72,9 @@ model Auction {
   name          String
   currency      String
   description   String
-  UserAuction   UserAuction[]
+  userId        Int
+  createdBy     User          @relation(fields: [userId], references: [id])
+  userAuction   UserAuction[]
 }
 
 model UserAuction {

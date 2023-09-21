@@ -1,16 +1,8 @@
 import { PromiseReturnType } from "blitz"
 import { useMutation } from "@blitzjs/rpc"
 import { useForm, zodResolver } from "@mantine/form"
-import {
-  Button,
-  Group,
-  NativeSelect,
-  NumberInput,
-  Space,
-  Stack,
-  TextInput,
-  Textarea,
-} from "@mantine/core"
+import { notifications } from "@mantine/notifications"
+import { Button, Group, NumberInput, Space, Stack, TextInput, Textarea } from "@mantine/core"
 import { DateTimePicker } from "@mantine/dates"
 import dayjs from "dayjs"
 
@@ -38,9 +30,20 @@ const CreateAuctionForm = (props: Props) => {
     },
   })
 
-  function handleSubmit(values: AuctionItemSchemaType) {
+  async function handleSubmit(values: AuctionItemSchemaType) {
     // Code
     console.log(values)
+    try {
+      const result = await createAuctionMutation({
+        ...values,
+      })
+      console.log(result)
+    } catch (error) {
+      notifications.show({
+        title: "Oops",
+        message: "An error occured. Or did you forget to login?",
+      })
+    }
   }
 
   return (
