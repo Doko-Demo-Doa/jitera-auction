@@ -8,7 +8,7 @@ export const AuctionItemSchema = z
     description: z.string().min(1).max(1024),
     startingPrice: z.number().min(1).nonnegative(),
     priceStep: z.number().min(0.1).nonnegative(),
-    currency: z.string(),
+    currency: z.string().default("usd"),
     isEnded: z.number(),
     startsAt: z
       .date()
@@ -37,9 +37,7 @@ export const AuctionItemSchema = z
       const start = dayjs(data.startsAt)
       const end = dayjs(data.endsAt)
 
-      console.log("ss", start.format("YYYY-MM-DD HH:mm"), end.format("YYYY-MM-DD HH:mm"))
       if (end.isBefore(start) || end.isSame(start)) {
-        console.log("X1")
         return false
       }
 
