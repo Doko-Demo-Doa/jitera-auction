@@ -20,10 +20,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 Ensure the `.env.local` file has required environment variables:
 
 ```
-DATABASE_URL="postgresql://postgres:oH1UBs2wfmd03NMGEsBM@containers-us-west-77.railway.app:6502/railway"
-# DATABASE_URL=postgresql://doko@localhost:5432/jitera-auction
-RESEND_API_KEY="re_GcfCNhw5_QAe7h6Njj3RDwAbjYpcZnbap"
-APP_ORIGIN="https://jitera-auction-production.up.railway.app"
+DATABASE_URL="DATABASE_URL"
+# DATABASE_URL=DATABASE_URL
+RESEND_API_KEY="<RESEND_API_KEY>"
+APP_ORIGIN="DATABASE_URL"
 
 ```
 
